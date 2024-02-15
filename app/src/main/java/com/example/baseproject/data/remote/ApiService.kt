@@ -7,5 +7,5 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET(BASE_URL)
-    suspend fun getMatches(): Match
+    suspend fun getMatches(): List<Match>
 }
