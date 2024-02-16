@@ -14,9 +14,9 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class MatchesViewModel @Inject constructor(private val matchesRepository: MatchesRepository): ViewModel() {
+class MatchesViewModel @Inject constructor(private val matchesRepository: MatchesRepository) : ViewModel() {
 
-    var _matchesState = MutableStateFlow<MatchesState>(MatchesState.Empty)
+    private var _matchesState = MutableStateFlow<MatchesState>(MatchesState.Empty)
     var matchesState: StateFlow<MatchesState> = _matchesState
 
     init {
@@ -29,14 +29,10 @@ class MatchesViewModel @Inject constructor(private val matchesRepository: Matche
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val matchesResponse = matchesRepository.getAllMatches()
-                println("aqui")
-                println(matchesResponse)
                 _matchesState.value = MatchesState.Success(matchesResponse)
-            }
-            catch (exception: HttpException) {
+            } catch (exception: HttpException) {
                 _matchesState.value = MatchesState.Error("No internet connection")
-            }
-            catch (exception: IOException) {
+            } catch (exception: IOException) {
                 _matchesState.value = MatchesState.Error("Something went wrong")
             }
         }

@@ -1,4 +1,4 @@
-package com.example.champ
+package com.example.baseproject
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
